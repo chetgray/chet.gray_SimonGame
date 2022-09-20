@@ -11,17 +11,21 @@ namespace SimonGame
         {
             List<string> simonSequence = new List<string>();
             List<string> inputSequence = new List<string>();
+            string newItem;
             int minValue = 0;
             int maxValue = 9;
-            int blankDelay = 125;
             int sayDelay = 3000;
             Random random = new Random();
 
             bool inputIsCorrect = true;
             while (inputIsCorrect)
             {
-                simonSequence.Add(random.Next(minValue, maxValue).ToString());
-                SaySequence(simonSequence, sayDelay, blankDelay);
+                newItem = random.Next(minValue, maxValue).ToString();
+                simonSequence.Add(newItem);
+                Console.Clear();
+                Console.WriteLine($"Simon says:\n{newItem}");
+                Task.Delay(sayDelay).Wait();
+                Console.Clear();
 
                 inputSequence.Clear();
                 inputIsCorrect = true;
@@ -63,23 +67,6 @@ namespace SimonGame
         {
             PromptForKeyToContinue(message);
             Environment.Exit(exitCode);
-        }
-
-        private static void SaySequence(
-            IEnumerable<string> simonSequence,
-            int sayDelay,
-            int blankDelay = 0
-        )
-        {
-            Console.Clear();
-            foreach (string item in simonSequence)
-            {
-                Console.WriteLine("Simon says:");
-                Task.Delay(blankDelay).Wait();
-                Console.WriteLine(item);
-                Task.Delay(sayDelay).Wait();
-                Console.Clear();
-            }
         }
     }
 }
