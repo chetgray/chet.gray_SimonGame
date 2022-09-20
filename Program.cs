@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SimonGame
 {
@@ -10,12 +11,22 @@ namespace SimonGame
             List<string> simonSequence = new List<string>();
             int minValue = 0;
             int maxValue = 9;
+            int sayDelay = 3000;
             Random random = new Random();
 
             bool inputIsCorrect = true;
             while (inputIsCorrect)
             {
                 simonSequence.Add(random.Next(minValue, maxValue).ToString());
+
+                Console.Clear();
+                foreach (string item in simonSequence)
+                {
+                    Console.WriteLine($"Simon says:\n{item}");
+                    Task.Delay(sayDelay).Wait();
+                    Console.Clear();
+                }
+
                 PromptForKeyToContinue();
             }
             Console.WriteLine("Incorrect");
