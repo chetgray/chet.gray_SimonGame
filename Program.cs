@@ -18,14 +18,7 @@ namespace SimonGame
             while (inputIsCorrect)
             {
                 simonSequence.Add(random.Next(minValue, maxValue).ToString());
-
-                Console.Clear();
-                foreach (string item in simonSequence)
-                {
-                    Console.WriteLine($"Simon says:\n{item}");
-                    Task.Delay(sayDelay).Wait();
-                    Console.Clear();
-                }
+                SaySequence(simonSequence, sayDelay);
 
                 PromptForKeyToContinue();
             }
@@ -49,6 +42,17 @@ namespace SimonGame
         {
             PromptForKeyToContinue(message);
             Environment.Exit(exitCode);
+        }
+
+        private static void SaySequence(IEnumerable<string> simonSequence, int sayDelay)
+        {
+            Console.Clear();
+            foreach (string item in simonSequence)
+            {
+                Console.WriteLine($"Simon says:\n{item}");
+                Task.Delay(sayDelay).Wait();
+                Console.Clear();
+            }
         }
     }
 }
