@@ -13,6 +13,7 @@ namespace SimonGame
             List<string> inputSequence = new List<string>();
             int minValue = 0;
             int maxValue = 9;
+            int blankDelay = 125;
             int sayDelay = 3000;
             Random random = new Random();
 
@@ -20,7 +21,7 @@ namespace SimonGame
             while (inputIsCorrect)
             {
                 simonSequence.Add(random.Next(minValue, maxValue).ToString());
-                SaySequence(simonSequence, sayDelay);
+                SaySequence(simonSequence, sayDelay, blankDelay);
 
                 inputSequence.Clear();
                 inputIsCorrect = true;
@@ -64,12 +65,18 @@ namespace SimonGame
             Environment.Exit(exitCode);
         }
 
-        private static void SaySequence(IEnumerable<string> simonSequence, int sayDelay)
+        private static void SaySequence(
+            IEnumerable<string> simonSequence,
+            int sayDelay,
+            int blankDelay = 0
+        )
         {
             Console.Clear();
             foreach (string item in simonSequence)
             {
-                Console.WriteLine($"Simon says:\n{item}");
+                Console.WriteLine("Simon says:");
+                Task.Delay(blankDelay).Wait();
+                Console.WriteLine(item);
                 Task.Delay(sayDelay).Wait();
                 Console.Clear();
             }
