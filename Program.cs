@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SimonGame
@@ -34,7 +35,14 @@ namespace SimonGame
                     }
                 }
             }
+
             Console.WriteLine("Incorrect");
+            Console.WriteLine("Simon\tYou\nsaid:\tsaid:");
+            for (int i = 0; i < simonSequence.Count; i++)
+            {
+                Console.WriteLine($"{simonSequence[i]}\t{inputSequence.ElementAtOrDefault(i)}");
+            }
+            Console.WriteLine($"Your score was: {simonSequence.Count - 1}");
             PromptForKeyToExit();
         }
 
