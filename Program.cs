@@ -9,14 +9,42 @@ namespace SimonGame
     {
         static void Main(string[] args)
         {
+            int minValue = 0;
+            int maxValue = 0;
+            int blankDelay = 45;
+            int sayDelay = 0;
+            string difficulty = "";
+            bool difficultyIsSet = false;
+            while (!difficultyIsSet)
+            {
+                Console.Write("Select a difficulty level? (easy, medium, hard)\n» ");
+                difficulty = Console.ReadLine();
+                switch (difficulty)
+                {
+                    case "easy":
+                        maxValue = 10;
+                        sayDelay = 5000;
+                        difficultyIsSet = true;
+                        break;
+                    case "medium":
+                        maxValue = 20;
+                        sayDelay = 3000;
+                        difficultyIsSet = true;
+                        break;
+                    case "hard":
+                        maxValue = 30;
+                        sayDelay = 1000;
+                        difficultyIsSet = true;
+                        break;
+                    default:
+                        Console.WriteLine($"ERROR: {difficulty} is not a valid difficulty level");
+                        break;
+                }
+            }
+
             List<string> simonSequence = new List<string>();
             List<string> inputSequence = new List<string>();
-            int minValue = 0;
-            int maxValue = 9;
-            int blankDelay = 125;
-            int sayDelay = 3000;
             Random random = new Random();
-
             bool inputIsCorrect = true;
             while (inputIsCorrect)
             {
