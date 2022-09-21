@@ -9,17 +9,38 @@ namespace SimonGame
     {
         static void Main(string[] args)
         {
-            double difficulty = PromptParseDouble(
-                "What is you're difficulty factor? (0 = easy, 1 = medium, 2+ = hard. Decimals are okay.)"
-            );
-            while (difficulty < 0)
-            {
-                difficulty = PromptParseDouble("No negative numbers, please.");
-            }
             int minValue = 0;
-            int maxValue = (int)Math.Pow(10, difficulty + 1) - 1; // 9, 99, 999, ...
+            int maxValue = 0;
             int blankDelay = 45;
-            int sayDelay = (int)(3000 * Math.Pow(2, -difficulty)) + 45; // 3000, 1500, 750, ...
+            int sayDelay = 0;
+            string difficulty = "";
+            bool difficultyIsSet = false;
+            while (!difficultyIsSet)
+            {
+                Console.Write("Select a difficulty level? (easy, medium, hard)\n» ");
+                difficulty = Console.ReadLine();
+                switch (difficulty)
+                {
+                    case "easy":
+                        maxValue = 10;
+                        sayDelay = 5000;
+                        difficultyIsSet = true;
+                        break;
+                    case "medium":
+                        maxValue = 20;
+                        sayDelay = 3000;
+                        difficultyIsSet = true;
+                        break;
+                    case "hard":
+                        maxValue = 30;
+                        sayDelay = 1000;
+                        difficultyIsSet = true;
+                        break;
+                    default:
+                        Console.WriteLine($"ERROR: {difficulty} is not a valid difficulty level");
+                        break;
+                }
+            }
 
             List<string> simonSequence = new List<string>();
             List<string> inputSequence = new List<string>();
@@ -87,17 +108,6 @@ namespace SimonGame
                 Task.Delay(sayDelay).Wait();
                 Console.Clear();
             }
-        }
-
-        private static double PromptParseDouble(string promptString)
-        {
-            double returnVal;
-            Console.Write($"{promptString}\n» ");
-            while (!double.TryParse(Console.ReadLine(), out returnVal))
-            {
-                Console.Write($"ERROR: Input was not in the correct format.\n{promptString}:\n» ");
-            }
-            return returnVal;
         }
     }
 }
