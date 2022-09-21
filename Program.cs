@@ -9,14 +9,21 @@ namespace SimonGame
     {
         static void Main(string[] args)
         {
+            double difficulty = PromptParseDouble(
+                "What is you're difficulty factor? (0 = easy, 1 = medium, 2+ = hard. Decimals are okay.)"
+            );
+            while (difficulty < 0)
+            {
+                difficulty = PromptParseDouble("No negative numbers, please.");
+            }
+            int minValue = 0;
+            int maxValue = (int)Math.Pow(10, difficulty + 1) - 1; // 9, 99, 999, ...
+            int blankDelay = 45;
+            int sayDelay = (int)(3000 * Math.Pow(2, -difficulty)) + 45; // 3000, 1500, 750, ...
+
             List<string> simonSequence = new List<string>();
             List<string> inputSequence = new List<string>();
-            int minValue = 0;
-            int maxValue = 9;
-            int blankDelay = 125;
-            int sayDelay = 3000;
             Random random = new Random();
-
             bool inputIsCorrect = true;
             while (inputIsCorrect)
             {
@@ -80,6 +87,17 @@ namespace SimonGame
                 Task.Delay(sayDelay).Wait();
                 Console.Clear();
             }
+        }
+
+        private static double PromptParseDouble(string promptString)
+        {
+            double returnVal;
+            Console.Write($"{promptString}\n» ");
+            while (!double.TryParse(Console.ReadLine(), out returnVal))
+            {
+                Console.Write($"ERROR: Input was not in the correct format.\n{promptString}:\n» ");
+            }
+            return returnVal;
         }
     }
 }
